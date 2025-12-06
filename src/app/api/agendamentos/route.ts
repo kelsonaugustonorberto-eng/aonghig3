@@ -5,19 +5,43 @@ import { notifyTelegram } from "@/lib/telegram";
 import type { AgendamentoPayload } from "@/types/agendamento";
 
 const AgendamentoSchema = z.object({
-  serviceType: z.string().min(2),
-  detail: z.string().max(140).optional(),
-  municipio: z.string().min(2),
-  bairro: z.string().min(2),
-  endereco: z.string().min(3),
-  preferredDate: z.string().refine(
-    (val) => !Number.isNaN(Date.parse(val)),
-    "Data inválida",
-  ),
+  serviceType: z
+    .string()
+    .trim()
+    .min(2, { message: "Seleciona o tipo de serviço." }),
+  detail: z
+    .string()
+    .trim()
+    .max(140, { message: "Detalhes muito extensos." })
+    .optional(),
+  municipio: z
+    .string()
+    .trim()
+    .min(2, { message: "Município é obrigatório." }),
+  bairro: z
+    .string()
+    .trim()
+    .min(2, { message: "Indica o bairro." }),
+  endereco: z
+    .string()
+    .trim()
+    .min(3, { message: "Endereço completo é obrigatório." }),
+  preferredDate: z
+    .string()
+    .refine(
+      (val) => !Number.isNaN(Date.parse(val)),
+      "Data inválida",
+    ),
   period: z.enum(["Manhã", "Tarde"]),
-  nome: z.string().min(2),
-  telefone: z.string().min(6),
-  email: z.string().email().optional(),
+  nome: z
+    .string()
+    .trim()
+    .min(2, { message: "O nome deve ter pelo menos 2 caracteres." }),
+  telefone: z
+    .string()
+    .trim()
+    .min(6, { message: "WhatsApp deve ter pelo menos 6 caracteres." }),
+  email: z.string().email({ message: "Email inválido." }).optional(),
   observacoes: z.string().max(600).optional(),
 });
 

@@ -266,11 +266,12 @@ export function AgendarForm() {
             <input
               required
               type="tel"
+              minLength={6}
               className="mt-2 w-full rounded-2xl border border-[var(--border)] bg-[var(--surface-muted)] px-4 py-3"
               value={form.telefone}
               onChange={(event) => updateField("telefone", event.target.value)}
             />
-          </label>
+            </label>
         </div>
         <label className="text-sm font-medium">
           Email (opcional)
