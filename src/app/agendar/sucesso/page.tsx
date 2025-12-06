@@ -6,10 +6,13 @@ export const metadata: Metadata = {
 };
 
 type SuccessPageProps = {
-  searchParams: { id?: string };
+  searchParams: Promise<{ id?: string }>;
 };
 
-export default function AgendarSuccessPage({ searchParams }: SuccessPageProps) {
+export default async function AgendarSuccessPage({
+  searchParams,
+}: SuccessPageProps) {
+  const params = await searchParams;
   return (
     <div className="mx-auto flex max-w-3xl flex-col items-center gap-6 px-6 py-24 text-center lg:px-8">
       <p className="text-sm uppercase tracking-[0.3em] text-[var(--muted)]">
@@ -21,9 +24,9 @@ export default function AgendarSuccessPage({ searchParams }: SuccessPageProps) {
       <p className="text-lg text-[var(--muted)]">
         A nossa equipa vai entrar em contacto via WhatsApp ou SMS para confirmar
         a data e hora.{" "}
-        {searchParams.id ? (
+        {params.id ? (
           <span className="font-semibold text-[var(--foreground)]">
-            ID: {searchParams.id}
+            ID: {params.id}
           </span>
         ) : null}
       </p>
